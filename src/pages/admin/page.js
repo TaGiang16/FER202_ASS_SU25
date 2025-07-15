@@ -25,7 +25,6 @@ const AdminDashboard = () => {
     const [orders, setOrders] = useState([])
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
-    const [sellerProducts, setSellerProducts] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [searchTerm, setSearchTerm] = useState("")
@@ -54,14 +53,11 @@ const AdminDashboard = () => {
                 const productsResponse = await fetch("http://localhost:9999/products")
                 const productsData = await productsResponse.json()
                 setProducts(productsData)
-                const sellerProductsResponse = await fetch("http://localhost:9999/sellerProduct")
-                const sellerProductsData = await sellerProductsResponse.json()
-                setSellerProducts(sellerProductsData)
                 setLoading(false)
             } catch (err) {
-                setError("Không thể tải dữ liệu từ server")
+                setError("Failed to load data from server")
                 setLoading(false)
-                console.error("Lỗi khi fetch dữ liệu:", err)
+                console.error("Error fetching data:", err)
             }
         }
         fetchData()
@@ -353,37 +349,42 @@ const AdminDashboard = () => {
                 return item.order_id?.toString().includes(searchTerm)
             } else if (searchKey === "categories") {
                 return item.name?.toLowerCase().includes(searchTerm.toLowerCase())
-            } else if (searchKey === "sellerProducts") {
-                const seller = users.find((user) => user.id === item.userId)
-                return seller?.fullname?.toLowerCase().includes(searchTerm.toLowerCase())
             }
             return false
         })
     }
 
+    // Update status badge colors and text to English
     const getOrderStatusBadge = (status) => {
         switch (status?.toLowerCase()) {
             case "completed":
-                return <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Hoàn thành</span>
+                return <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Completed</span>
             case "processing":
-                return <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Đang xử lý</span>
+                return <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Processing</span>
+            case "shipped":
+                return <span className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs font-medium">Shipped</span>
+            case "delivered":
+                return <span className="px-2 py-1 bg-cyan-100 text-cyan-800 rounded-full text-xs font-medium">Delivered</span>
+            case "failed":
+                return <span className="px-2 py-1 bg-red-200 text-red-900 rounded-full text-xs font-medium">Failed</span>
             case "cancelled":
-                return <span className="px-2 py-1 bg-red-100 textかくred-800 rounded-full text-xs font-medium">Đã hủy</span>
+                return <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">Cancelled</span>
             case "pending":
-                return <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">Chờ xử lý</span>
+                return <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">Pending</span>
             default:
                 return <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-medium">{status}</span>
         }
     }
-
     const getProductStatusBadge = (status) => {
         switch (status?.toLowerCase()) {
             case "active":
-                return <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Đang bán</span>
+                return <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Active</span>
             case "inactive":
-                return <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">Ngừng bán</span>
+                return <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">Inactive</span>
+            case "available":
+                return <span className="px-2 py-1 bg-teal-100 text-teal-800 rounded-full text-xs font-medium">Available</span>
             case "out_of_stock":
-                return <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-medium">Hết hàng</span>
+                return <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-medium">Out of Stock</span>
             default:
                 return <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-medium">{status}</span>
         }
@@ -446,7 +447,7 @@ const AdminDashboard = () => {
                             onClick={() => { setActiveTab("users"); setCurrentPage(1) }}
                         >
                             <FaUsers className="w-5 h-5 mr-3" />
-                            <span>Quản lý người dùng</span>
+                            <span>User Management</span>
                         </li>
                         <li
                             className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors ${activeTab === "products" ? "bg-blue-50 text-blue-700" : "text-gray-700 hover:bg-gray-100"
@@ -454,7 +455,7 @@ const AdminDashboard = () => {
                             onClick={() => { setActiveTab("products"); setCurrentPage(1) }}
                         >
                             <FaBoxOpen className="w-5 h-5 mr-3" />
-                            <span>Quản lý sản phẩm</span>
+                            <span>Product Management</span>
                         </li>
                         <li
                             className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors ${activeTab === "orders" ? "bg-blue-50 text-blue-700" : "text-gray-700 hover:bg-gray-100"
@@ -462,7 +463,7 @@ const AdminDashboard = () => {
                             onClick={() => { setActiveTab("orders"); setCurrentPage(1) }}
                         >
                             <FaShoppingBag className="w-5 h-5 mr-3" />
-                            <span>Quản lý đơn hàng</span>
+                            <span>Order Management</span>
                         </li>
                         <li
                             className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors ${activeTab === "categories" ? "bg-blue-50 text-blue-700" : "text-gray-700 hover:bg-gray-100"
@@ -470,43 +471,35 @@ const AdminDashboard = () => {
                             onClick={() => { setActiveTab("categories"); setCurrentPage(1) }}
                         >
                             <FaList className="w-5 h-5 mr-3" />
-                            <span>Quản lý danh mục</span>
+                            <span>Category Management</span>
                         </li>
+                        {/* Home button */}
                         <li
-                            className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors ${activeTab === "sellerProducts" ? "bg-blue-50 text-blue-700" : "text-gray-700 hover:bg-gray-100"
-                                }`}
-                            onClick={() => { setActiveTab("sellerProducts"); setCurrentPage(1) }}
+                            className="flex items-center p-3 rounded-lg cursor-pointer text-gray-700 hover:bg-gray-100 transition-colors"
+                            onClick={() => navigate('/')}
                         >
-                            <FaShoppingCart className="w-5 h-5 mr-3" />
-                            <span>Sản phẩm người bán</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-5 h-5 mr-3"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                />
+                            </svg>
+                            <span>Back to Home</span>
                         </li>
-                        {/* Nút Về trang chủ */}
-  <li
-    className="flex items-center p-3 rounded-lg cursor-pointer text-gray-700 hover:bg-gray-100 transition-colors"
-    onClick={() => navigate('/')}
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-5 h-5 mr-3"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-      />
-    </svg>
-    <span>Về trang chủ</span>
-  </li>
                         <li
                             className="flex items-center p-3 rounded-lg cursor-pointer text-red-700 hover:bg-red-100 transition-colors"
                             onClick={handleLogout}
                         >
                             <FaSignOutAlt className="w-5 h-5 mr-3" />
-                            <span>Đăng xuất</span>
+                            <span>Logout</span>
                         </li>
                     </ul>
                 </div>
@@ -516,18 +509,16 @@ const AdminDashboard = () => {
                 {/* Header giữ nguyên */}
                 <div className="mb-8">
                     <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
-                        {activeTab === "users" && "Quản lý người dùng"}
-                        {activeTab === "products" && "Quản lý sản phẩm"}
-                        {activeTab === "orders" && "Quản lý đơn hàng"}
-                        {activeTab === "categories" && "Quản lý danh mục"}
-                        {activeTab === "sellerProducts" && "Quản lý sản phẩm người bán"}
+                        {activeTab === "users" && "User Management"}
+                        {activeTab === "products" && "Product Management"}
+                        {activeTab === "orders" && "Order Management"}
+                        {activeTab === "categories" && "Category Management"}
                     </h1>
                     <p className="text-gray-600">
-                        {activeTab === "users" && "Xem và quản lý tất cả người dùng trong hệ thống"}
-                        {activeTab === "products" && "Xem và quản lý tất cả sản phẩm trong hệ thống"}
-                        {activeTab === "orders" && "Xem và quản lý tất cả đơn hàng trong hệ thống"}
-                        {activeTab === "categories" && "Xem và quản lý tất cả danh mục sản phẩm"}
-                        {activeTab === "sellerProducts" && "Xem và quản lý sản phẩm của người bán"}
+                        {activeTab === "users" && "View and manage all users in the system"}
+                        {activeTab === "products" && "View and manage all products in the system"}
+                        {activeTab === "orders" && "View and manage all orders in the system"}
+                        {activeTab === "categories" && "View and manage all product categories"}
                     </p>
                 </div>
 
@@ -580,7 +571,7 @@ const AdminDashboard = () => {
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vai trò</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hành động</th>
                                     </tr>
                                 </thead>
@@ -602,10 +593,8 @@ const AdminDashboard = () => {
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 {user.role === "admin" ? (
                                                     <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">Admin</span>
-                                                ) : user.role === "seller" ? (
-                                                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Người bán</span>
                                                 ) : (
-                                                    <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Người dùng</span>
+                                                    <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Customer</span>
                                                 )}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -619,12 +608,12 @@ const AdminDashboard = () => {
                                                     {user.action === "unlock" ? (
                                                         <>
                                                             <FaBan className="w-4 h-4 mr-1" />
-                                                            <span>Khóa</span>
+                                                            <span>Lock</span>
                                                         </>
                                                     ) : (
                                                         <>
                                                             <FaCheckCircle className="w-4 h-4 mr-1" />
-                                                            <span>Mở khóa</span>
+                                                            <span>Unlock</span>
                                                         </>
                                                     )}
                                                 </button>
@@ -850,70 +839,6 @@ const AdminDashboard = () => {
                         </div>
                     )}
 
-                    {activeTab === "sellerProducts" && (
-                        <div className="overflow-x-auto">
-                            <table className="w-full">
-                                <thead>
-                                    <tr className="bg-gray-50 border-b">
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Người bán</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sản phẩm</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hành động</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-200">
-                                    {paginateData(filterData(sellerProducts, "sellerProducts")).map((seller) => (
-                                        <tr key={seller.id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seller.id}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="flex items-center">
-                                                    <div className="h-10 w-10 flex-shrink-0 bg-gray-200 rounded-full flex items-center justify-center">
-                                                        <span className="text-gray-500 font-medium">
-                                                            {users.find((user) => user.id === seller.userId)?.fullname?.charAt(0) || "?"}
-                                                        </span>
-                                                    </div>
-                                                    <div className="ml-4">
-                                                        <div className="text-sm font-medium text-gray-900">
-                                                            {users.find((user) => user.id === seller.userId)?.fullname || "N/A"}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="space-y-2">
-                                                    {seller.products.map((prod) => (
-                                                        <div key={prod.idProduct} className="flex items-center">
-                                                            <span className="text-sm text-gray-900 font-medium">
-                                                                {products.find((p) => p.id === prod.idProduct)?.title || prod.idProduct}
-                                                            </span>
-                                                            <span className="ml-2">
-                                                                {prod.status === "active" ? (
-                                                                    <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Đang bán</span>
-                                                                ) : (
-                                                                    <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">Ngừng bán</span>
-                                                                )}
-                                                            </span>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                <button className="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-700 rounded-md hover:bg-blue-100">
-                                                    <FaEye className="w-4 h-4 mr-1" />
-                                                    <span>Chi tiết</span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                            {filterData(sellerProducts, "sellerProducts").length === 0 && (
-                                <div className="text-center py-10">
-                                    <p className="text-gray-500">Không tìm thấy sản phẩm người bán nào</p>
-                                </div>
-                            )}
-                        </div>
-                    )}
                 </div>
 
                 {/* Phân trang */}
@@ -926,7 +851,7 @@ const AdminDashboard = () => {
                                     activeTab === "products" ? products :
                                         activeTab === "orders" ? orders :
                                             activeTab === "categories" ? categories :
-                                                sellerProducts,
+                                                [],
                                 activeTab
                             ).length)}
                         </span> trong số{" "}
@@ -936,7 +861,7 @@ const AdminDashboard = () => {
                                     activeTab === "products" ? products :
                                         activeTab === "orders" ? orders :
                                             activeTab === "categories" ? categories :
-                                                sellerProducts,
+                                                [],
                                 activeTab
                             ).length}
                         </span>{" "}
@@ -956,7 +881,7 @@ const AdminDashboard = () => {
                                     activeTab === "products" ? products :
                                         activeTab === "orders" ? orders :
                                             activeTab === "categories" ? categories :
-                                                sellerProducts,
+                                                [],
                                 activeTab
                             ))
                         }, (_, i) => i + 1).map((page) => (
@@ -978,7 +903,7 @@ const AdminDashboard = () => {
                                     activeTab === "products" ? products :
                                         activeTab === "orders" ? orders :
                                             activeTab === "categories" ? categories :
-                                                sellerProducts,
+                                                [],
                                 activeTab
                             ))}
                             className="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50"
@@ -1192,14 +1117,13 @@ const AdminDashboard = () => {
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700">Vai trò</label>
+                                            <label className="block text-sm font-medium text-gray-700">Role</label>
                                             <select
                                                 name="role"
-                                                defaultValue={showAddEdit.data?.role || "user"}
+                                                defaultValue={showAddEdit.data?.role || "customer"}
                                                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
                                             >
-                                                <option value="user">Người dùng</option>
-                                                <option value="seller">Người bán</option>
+                                                <option value="customer">Customer</option>
                                                 <option value="admin">Admin</option>
                                             </select>
                                         </div>
@@ -1210,8 +1134,8 @@ const AdminDashboard = () => {
                                                 defaultValue={showAddEdit.data?.action || "unlock"}
                                                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
                                             >
-                                                <option value="unlock">Mở khóa</option>
-                                                <option value="lock">Khóa</option>
+                                                <option value="unlock">Unlock</option>
+                                                <option value="lock">Lock</option>
                                             </select>
                                         </div>
                                     </div>

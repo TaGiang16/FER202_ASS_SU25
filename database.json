@@ -38,7 +38,7 @@
         "city": "New York",
         "country": "United States"
       },
-      "role": "seller",
+      "role": "customer",
       "action": "unlock"
     },
     {
@@ -57,7 +57,7 @@
         "city": "Los Angeles",
         "country": "United States"
       },
-      "role": "seller",
+      "role": "customer",
       "action": "lock"
     },
     {
@@ -74,7 +74,7 @@
         "city": "Chicago",
         "country": "United States"
       },
-      "role": "seller",
+      "role": "customer",
       "action": "unlock"
     },
     {
@@ -293,7 +293,7 @@
         "city": "Skibidi",
         "country": "VN"
       },
-      "role": "seller",
+      "role": "customer",
       "action": "unlock"
     },
     {
@@ -310,7 +310,7 @@
         "city": "123",
         "country": "Việt Nam"
       },
-      "role": "seller",
+      "role": "customer",
       "action": "unlock"
     },
     {
@@ -332,7 +332,7 @@
         "city": "123",
         "country": "123"
       },
-      "role": "seller",
+      "role": "customer",
       "action": "unlock"
     }
   ],
