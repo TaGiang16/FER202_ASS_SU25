@@ -1,9 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import {
-  FiHeart,
   FiShoppingCart,
-  FiClock,
   FiChevronRight,
   FiShare2,
   FiPrinter,
@@ -17,6 +15,7 @@ import SimilarProducts from "../../../components/SimilarProducts";
 import { formatCurrency } from "../../../utils/formatCurrency";
 import { useRegion } from "../../../context/RegionContext";
 import ProductReview from "../../../components/ProductReview";
+import { Toast, ToastContainer } from "react-bootstrap";
 // Import components
 
 export default function ProductDetail() {
@@ -24,10 +23,8 @@ export default function ProductDetail() {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isItemAdded, setIsItemAdded] = useState(false);
   const [bidAmount, setBidAmount] = useState("");
   const [selectedImage, setSelectedImage] = useState(0);
-  const [isWishlist, setIsWishlist] = useState(false);
   const [bidHistory, setBidHistory] = useState([]);
   const [showBidHistory, setShowBidHistory] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -41,6 +38,7 @@ export default function ProductDetail() {
   }, []);
   const { currencyMeta, exchangeRate } = useRegion();
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [showToast, setShowToast] = useState(false);
 
   //Modal function to handle Buy Now click
   const handleBuyNowClick = () => {
@@ -61,30 +59,6 @@ export default function ProductDetail() {
     { id: 3, url: "https://picsum.photos/id/30/400" },
   ];
 
-  // Check if product is in cart
-  const checkItemInCart = async () => {
-    if (!currentUser) return false;
-    try {
-      const response = await fetch(
-        `http://localhost:9999/shoppingCart?userId=${currentUser.id}`
-      );
-      const cartData = await response.json();
-      const cartWithProduct = cartData.find((cart) =>
-        cart.productId.some((p) => p.idProduct === id)
-      );
-      return !!cartWithProduct;
-    } catch (error) {
-      console.error("Error checking cart:", error);
-      return false;
-    }
-  };
-
-  // Check if product is in wishlist
-  const checkItemInWishlist = () => {
-    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    return wishlist.some((item) => item.id === id);
-  };
-
   // Fetch product data, cart status, and bid history
   useEffect(() => {
     const fetchProductAndCartStatus = async () => {
@@ -95,13 +69,6 @@ export default function ProductDetail() {
         if (data && data[0]) {
           setProduct(data[0]);
         }
-
-        // Check cart status
-        const inCart = await checkItemInCart();
-        setIsItemAdded(inCart);
-
-        // Check wishlist status
-        setIsWishlist(checkItemInWishlist());
 
         // Fetch bid history for auction items
         if (data[0]?.isAuction) {
@@ -154,98 +121,74 @@ export default function ProductDetail() {
       );
       const cartData = await cartResponse.json();
 
-      if (isItemAdded) {
-        const cartWithProduct = cartData.find((cart) =>
-          cart.productId.some((p) => p.idProduct === id)
+      // Check if the cart already exists
+      if (cartData.length > 0) {
+        const cartItem = cartData[0];
+
+        const existingProduct = cartItem.productId.find(
+          (p) => p.idProduct === id
         );
 
-        if (cartWithProduct) {
-          const updatedProducts = cartWithProduct.productId.filter(
-            (p) => p.idProduct !== id
+        let updatedProducts;
+
+        if (existingProduct) {
+          // If product exists, update quantity
+          updatedProducts = cartItem.productId.map((p) =>
+            p.idProduct === id
+              ? {
+                  ...p,
+                  quantity: (parseInt(p.quantity) + quantity).toString(),
+                }
+              : p
           );
-
-          if (updatedProducts.length === 0) {
-            await fetch(
-              `http://localhost:9999/shoppingCart/${cartWithProduct.id}`,
-              {
-                method: "DELETE",
-              }
-            );
-          } else {
-            await fetch(
-              `http://localhost:9999/shoppingCart/${cartWithProduct.id}`,
-              {
-                method: "PATCH",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  productId: updatedProducts,
-                }),
-              }
-            );
-          }
-          setIsItemAdded(false);
-        }
-      } else {
-        if (cartData.length > 0) {
-          const cartItem = cartData[0];
-          const existingProduct = cartItem.productId.find(
-            (p) => p.idProduct === id
-          );
-
-          if (existingProduct) {
-            const updatedProducts = cartItem.productId.map((p) =>
-              p.idProduct === id
-                ? {
-                    ...p,
-                    quantity: (parseInt(p.quantity) + quantity).toString(),
-                  }
-                : p
-            );
-
-            await fetch(`http://localhost:9999/shoppingCart/${cartItem.id}`, {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                productId: updatedProducts,
-              }),
-            });
-          } else {
-            await fetch(`http://localhost:9999/shoppingCart/${cartItem.id}`, {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                productId: [
-                  ...cartItem.productId,
-                  { idProduct: id, quantity: quantity.toString() },
-                ],
-              }),
-            });
-          }
         } else {
-          await fetch("http://localhost:9999/shoppingCart", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userId: currentUser.id,
-              productId: [{ idProduct: id, quantity: quantity.toString() }],
-              dateAdded: new Date().toISOString(),
-            }),
-          });
+          // If product doesn't exist, add it
+          updatedProducts = [
+            ...cartItem.productId,
+            { idProduct: id, quantity: quantity.toString() },
+          ];
         }
-        setIsItemAdded(true);
+
+        // PATCH updated cart
+        await fetch(`http://localhost:9999/shoppingCart/${cartItem.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            productId: updatedProducts,
+          }),
+        });
+      } else {
+        // If no cart exists for this user, create a new one
+        await fetch("http://localhost:9999/shoppingCart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: currentUser.id,
+            productId: [{ idProduct: id, quantity: quantity.toString() }],
+            dateAdded: new Date().toISOString(),
+          }),
+        });
       }
+
+      setShowToast(true);
     } catch (error) {
       console.error("Error managing cart:", error);
       alert("Failed to update cart");
     }
+  };
+
+  const handleBuyNow = async () => {
+    if (!currentUser) {
+      alert("Please login to buy this product");
+      navigate("/auth");
+      return;
+    }
+    await handleCartAction();
+    navigate("/checkout");
   };
 
   // Handle placing a bid
@@ -337,42 +280,6 @@ export default function ProductDetail() {
       console.error("Error placing bid:", error);
       alert("Failed to place bid: " + error.message);
     }
-  };
-
-  // Toggle wishlist status
-  const toggleWishlist = () => {
-    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-
-    if (isWishlist) {
-      const updatedWishlist = wishlist.filter((item) => item.id !== id);
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-      setIsWishlist(false);
-    } else {
-      if (product) {
-        localStorage.setItem(
-          "wishlist",
-          JSON.stringify([...wishlist, product])
-        );
-        setIsWishlist(true);
-      }
-    }
-  };
-
-  // Format time remaining for auction
-  const formatTimeRemaining = () => {
-    // Mock time remaining calculation
-    const days = 2;
-    const hours = 3;
-    const minutes = 45;
-
-    return (
-      <div className="flex items-center text-gray-700">
-        <FiClock className="mr-2" />
-        <span className="font-medium">
-          {days}d {hours}h {minutes}m
-        </span>
-      </div>
-    );
   };
 
   // Loading state
@@ -881,34 +788,33 @@ export default function ProductDetail() {
 
                         <div className="space-y-2">
                           <button
-                            onClick={handleCartAction}
-                            className={`w-full flex items-center justify-center px-6 py-2 text-base font-medium text-white ${
-                              isItemAdded
-                                ? "bg-[#e43147] hover:bg-[#c52b3d]"
-                                : "bg-[#0053A0] hover:bg-[#00438A]"
-                            }`}
+                            onClick={handleBuyNow}
+                            className="w-full flex items-center justify-center px-6 py-2 text-base font-medium text-white bg-[#0053A0] hover:bg-[#00438A]"
                           >
-                            <FiShoppingCart className="mr-2 h-5 w-5" />
-                            {isItemAdded
-                              ? "Remove from basket"
-                              : "Add to basket"}
+                            Buy now
                           </button>
-
                           <button
-                            onClick={toggleWishlist}
+                            onClick={handleCartAction}
                             className="w-full flex items-center justify-center px-6 py-2 border border-gray-300 text-base font-medium text-gray-700 bg-white hover:bg-gray-50"
                           >
-                            <FiHeart
-                              className={`mr-2 h-5 w-5 ${
-                                isWishlist
-                                  ? "text-[#e43147] fill-[#e43147]"
-                                  : ""
-                              }`}
-                            />
-                            {isWishlist
-                              ? "Remove from watchlist"
-                              : "Add to watchlist"}
+                            <FiShoppingCart className="mr-2 h-5 w-5" />
+                            Add to basket
                           </button>
+                          <ToastContainer>
+                            <Toast
+                              bg="success"
+                              show={showToast}
+                              onClose={() => setShowToast(false)}
+                              autohide
+                              delay={2000}
+                            >
+                              <Toast.Header>
+                                <strong className="me-auto">
+                                  Product added to cart successfully!
+                                </strong>
+                              </Toast.Header>
+                            </Toast>
+                          </ToastContainer>
                         </div>
                       </div>
                     ) : (
