@@ -313,7 +313,7 @@ export default function ListCategory() {
           {/* Desktop Sidebar */}
           <div className="hidden lg:block">
             <div className="bg-white rounded-lg shadow-sm p-6 sticky top-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-4">Shop by Category</h2>
+              {/* <h2 className="text-lg font-medium text-gray-900 mb-4">Shop by Category</h2>
               <ul className="space-y-3">
                 {getSubcategories().map((subcategory, index) => (
                   <li key={index}>
@@ -322,9 +322,9 @@ export default function ListCategory() {
                     </a>
                   </li>
                 ))}
-              </ul>
+              </ul> */}
 
-              <div className="mt-8 pt-6 border-t border-gray-200">
+              {/* <div className="mt-8 pt-6 border-t border-gray-200">
                 <h2 className="text-lg font-medium text-gray-900 mb-4">Shop by Store</h2>
                 <ul className="space-y-3">
                   {allCategories.map((cat) => (
@@ -340,10 +340,10 @@ export default function ListCategory() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
 
               {/* Desktop Filters */}
-              <div className="mt-8 pt-6 border-t border-gray-200">
+              <div className="mt-8 pt-6 ">
                 <h2 className="text-lg font-medium text-gray-900 mb-4">Filters</h2>
                 
                 {getFilters().map((filter, filterIndex) => (

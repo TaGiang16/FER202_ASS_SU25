@@ -20,6 +20,7 @@ import AddressPage from "./pages/address/page";
 import ShippingPage from "./pages/shipping/page";
 import ShipperDashboard from "./pages/shipper/page";
 import UserProfile from "./pages/profile/page";
+import ProductDetail from "./pages/product/[id]/page";
 // ⬇️ Import RegionProvider
 import { RegionProvider } from "./context/RegionContext";
 
@@ -45,6 +46,7 @@ root.render(
           <Route path="/shipping" element={<ShippingPage />} />
           <Route path="/shipper" element={<ShipperDashboard />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>
       </BrowserRouter>
     </RegionProvider>

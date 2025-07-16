@@ -198,9 +198,9 @@ export default function ProductDetail() {
             const updatedProducts = cartItem.productId.map((p) =>
               p.idProduct === id
                 ? {
-                    ...p,
-                    quantity: (parseInt(p.quantity) + quantity).toString(),
-                  }
+                  ...p,
+                  quantity: (parseInt(p.quantity) + quantity).toString(),
+                }
                 : p
             );
 
@@ -477,11 +477,10 @@ export default function ProductDetail() {
                   <button
                     key={image.id}
                     onClick={() => setSelectedImage(index)}
-                    className={`flex-shrink-0 w-16 h-16 overflow-hidden border ${
-                      selectedImage === index
-                        ? "border-[#0053A0]"
-                        : "border-gray-200"
-                    }`}
+                    className={`flex-shrink-0 w-16 h-16 overflow-hidden border ${selectedImage === index
+                      ? "border-[#0053A0]"
+                      : "border-gray-200"
+                      }`}
                   >
                     <img
                       src={`${image.url}/100`}
@@ -557,373 +556,104 @@ export default function ProductDetail() {
 
               {/* Auction or Buy Now Section */}
               <div className="py-4 border-b border-gray-200">
-                {product.isAuction ? (
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <div className="text-sm text-gray-500">
-                          Current bid:
-                        </div>
-                        <div className="text-2xl font-medium text-gray-900">
-                          {formatCurrency(
-                            (product.price / 100) * exchangeRate,
-                            currencyMeta.code,
-                            currencyMeta.symbol
-                          )}
-                        </div>
-                        <div className="text-xs text-gray-500 mt-1">
-                          [Approximately US $
-                          {((product.price / 100) * 1.25).toFixed(2)}]
-                        </div>
+                <div className="space-y-3">
+                  <div>
+                    <div className="text-sm text-gray-500">Price:</div>
+                    <div className="flex items-baseline">
+                      <div className="text-2xl font-medium text-gray-900">
+                        {formatCurrency(
+                          (product.price / 100) * exchangeRate,
+                          currencyMeta.code,
+                          currencyMeta.symbol
+                        )}
                       </div>
-
-                      {product.status === "available" && (
-                        <div className="text-right">
-                          <div className="text-sm text-gray-500">
-                            Time left:
-                          </div>
-                          <div className="text-[#e43147] font-medium">
-                            2d 3h 45m
-                          </div>
-                          <div className="text-xs text-gray-500 mt-1">
-                            Sunday, 21:45 BST
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      [Approximately US ${((product.price / 100) * 1.25).toFixed(2)}]
+                    </div>
+                  </div>
+                  {product.status === "available" ? (
+                    <div className="space-y-2">
+                      <button
+                        onClick={handleCartAction}
+                        className={`w-full flex items-center justify-center px-6 py-2 text-base font-medium text-white ${isItemAdded
+                          ? "bg-[#e43147] hover:bg-[#c52b3d]"
+                          : "bg-[#0053A0] hover:bg-[#00438A]"
+                          }`}
+                      >
+                        <FiShoppingCart className="mr-2 h-5 w-5" />
+                        {isItemAdded ? "Remove from cart" : "Add to cart"}
+                      </button>
+                      <button
+                        className="w-full flex items-center justify-center px-6 py-2 text-base font-medium text-white bg-[#0053A0] hover:bg-[#00438A]"
+                        onClick={handleBuyNowClick}
+                      >
+                        Buy it now
+                      </button>
+                      {/* Modal */}
+                      {isModalOpen && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                          <div className="bg-white rounded-lg shadow-lg w-96 p-4">
+                            <div className="flex justify-between items-center border-b pb-2">
+                              <h2 className="text-lg font-medium">
+                                Confirm Purchase
+                              </h2>
+                              <button
+                                onClick={closeModal}
+                                className="text-gray-500 hover:text-gray-700"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                            <div className="mt-4">
+                              <img
+                                src={`${productImages[selectedImage].url}/400`}
+                                alt={product?.title}
+                                className="w-full h-40 object-contain mb-4"
+                              />
+                              <h3 className="text-sm font-medium">
+                                {product?.title}
+                              </h3>
+                              <p className="text-gray-500 text-sm mt-1">
+                                Price: £{((product.price * 1.2) / 100).toFixed(2)}
+                              </p>
+                            </div>
+                            <div className="mt-4 flex justify-between">
+                              <button
+                                onClick={closeModal}
+                                className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 rounded"
+                              >
+                                Cancel
+                              </button>
+                              <button
+                                className="bg-[#0053A0] hover:bg-[#00438A] text-white py-2 px-4 rounded"
+                                onClick={async () => {
+                                  if (!isItemAdded) {
+                                    await handleCartAction(); // Chỉ thêm vào giỏ nếu chưa có
+                                  }
+                                  closeModal();
+                                  navigate("/cart");
+                                }}
+                              >
+                                Confirm Purchase
+                              </button>
+                            </div>
                           </div>
                         </div>
                       )}
                     </div>
-
-                    {product.status === "available" ? (
-                      <div className="space-y-3">
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                          <div className="relative flex-1">
-                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                              <span className="text-gray-500">
-                                {currencyMeta.symbol}
-                              </span>
-                            </div>
-                            <input
-                              type="number"
-                              step="0.01"
-                              value={bidAmount}
-                              onChange={(e) => setBidAmount(e.target.value)}
-                              placeholder={`${(product.price / 100 + 1).toFixed(
-                                2
-                              )} or more`}
-                              className="block w-full pl-7 pr-12 py-2 border border-gray-300 focus:ring-[#0053A0] focus:border-[#0053A0]"
-                            />
-                          </div>
-                          <button
-                            onClick={handlePlaceBid}
-                            className="bg-[#0053A0] hover:bg-[#00438A] text-white py-2 px-6 font-medium"
-                          >
-                            Place bid
-                          </button>
-                        </div>
-
-                        <div className="text-xs text-gray-500">
-                          [Enter{" "}
-                          {formatCurrency(
-                            (product.price / 100) * exchangeRate,
-                            currencyMeta.code,
-                            currencyMeta.symbol
-                          )}{" "}
-                          or more]
-                        </div>
-
-                        <div className="flex items-center justify-between pt-3">
-                          <div>
-                            <div className="text-sm text-gray-500">
-                              Buy it now:
-                            </div>
-                            <div className="text-xl font-medium text-gray-900">
-                              {formatCurrency(
-                                ((product.price * 1.2) / 100) * exchangeRate,
-                                currencyMeta.code,
-                                currencyMeta.symbol
-                              )}
-                            </div>
-                            <div className="text-xs text-gray-500 mt-1">
-                              [Approximately US $
-                              {(((product.price * 1.2) / 100) * 1.25).toFixed(
-                                2
-                              )}
-                              ]
-                            </div>
-                          </div>
-                          <button
-                            className="bg-[#0053A0] hover:bg-[#00438A] text-white py-2 px-6 font-medium"
-                            onClick={handleBuyNowClick}
-                          >
-                            Buy it now
-                          </button>
-                          {/* Modal */}
-                          {isModalOpen && (
-                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                              <div className="bg-white rounded-lg shadow-lg w-96 p-4">
-                                <div className="flex justify-between items-center border-b pb-2">
-                                  <h2 className="text-lg font-medium">
-                                    Confirm Purchase
-                                  </h2>
-                                  <button
-                                    onClick={closeModal}
-                                    className="text-gray-500 hover:text-gray-700"
-                                  >
-                                    ✕
-                                  </button>
-                                </div>
-                                <div className="mt-4">
-                                  <img
-                                    src={`${productImages[selectedImage].url}/400`}
-                                    alt={product?.title}
-                                    className="w-full h-40 object-contain mb-4"
-                                  />
-                                  <h3 className="text-sm font-medium">
-                                    {product?.title}
-                                  </h3>
-                                  <p className="text-gray-500 text-sm mt-1">
-                                    Price: £
-                                    {((product.price * 1.2) / 100).toFixed(2)}
-                                  </p>
-                                </div>
-                                <div className="mt-4 flex justify-between">
-                                  <button
-                                    onClick={closeModal}
-                                    className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 rounded"
-                                  >
-                                    Cancel
-                                  </button>
-                                  <button className="bg-[#0053A0] hover:bg-[#00438A] text-white py-2 px-4 rounded">
-                                    Confirm Purchase
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="flex items-center text-xs text-[#0053A0] mt-2">
-                          <button
-                            onClick={() => setShowBidHistory(!showBidHistory)}
-                            className="hover:underline flex items-center"
-                          >
-                            {bidHistory.length} bids
-                          </button>
-                          <span className="mx-2">|</span>
-                          <button className="hover:underline">
-                            Add to watchlist
-                          </button>
-                        </div>
-
-                        {showBidHistory && (
-                          <div className="mt-2 border text-xs">
-                            <div className="bg-gray-100 p-2 font-medium">
-                              Bid History ({bidHistory.length} bids)
-                            </div>
-                            <table className="min-w-full">
-                              <thead className="bg-gray-50 text-gray-500">
-                                <tr>
-                                  <th className="px-2 py-1 text-left">
-                                    Bidder
-                                  </th>
-                                  <th className="px-2 py-1 text-left">
-                                    Bid Amount
-                                  </th>
-                                  <th className="px-2 py-1 text-left">Date</th>
-                                </tr>
-                              </thead>
-                              <tbody className="divide-y divide-gray-200">
-                                {bidHistory.length > 0 ? (
-                                  bidHistory.map((bid, index) => (
-                                    <tr key={bid.id}>
-                                      <td className="px-2 py-1 whitespace-nowrap">
-                                        u***{bid.userId.substring(0, 2)}
-                                      </td>
-                                      <td className="px-2 py-1 whitespace-nowrap font-medium">
-                                        {formatCurrency(
-                                          (bid.bidAmount / 100) * exchangeRate,
-                                          currencyMeta.code,
-                                          currencyMeta.symbol
-                                        )}
-                                      </td>
-                                      <td className="px-2 py-1 whitespace-nowrap text-gray-500">
-                                        {new Date(bid.bidDate).toLocaleString()}
-                                      </td>
-                                    </tr>
-                                  ))
-                                ) : (
-                                  <tr>
-                                    <td
-                                      colSpan={3}
-                                      className="px-2 py-2 text-center text-gray-500"
-                                    >
-                                      No bids yet. Be the first to bid!
-                                    </td>
-                                  </tr>
-                                )}
-                              </tbody>
-                            </table>
-                          </div>
-                        )}
+                  ) : (
+                    <div className="bg-red-50 border border-red-200 p-3 text-sm">
+                      <div className="font-medium text-red-800">
+                        Out of Stock
                       </div>
-                    ) : (
-                      <div className="bg-red-50 border border-red-200 p-3 text-sm">
-                        <div className="font-medium text-red-800">
-                          This auction has ended
-                        </div>
-                        <p className="mt-1 text-red-700">
-                          The auction for this item has ended. Check out similar
-                          products below.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    <div>
-                      <div className="text-sm text-gray-500">Price:</div>
-                      <div className="flex items-baseline">
-                        <div className="text-2xl font-medium text-gray-900">
-                          {formatCurrency(
-                            (product.price / 100) * exchangeRate,
-                            currencyMeta.code,
-                            currencyMeta.symbol
-                          )}
-                        </div>
-                        <div className="ml-2 text-sm text-gray-500 line-through">
-                          {formatCurrency(
-                            ((product.price * 1.2) / 100) * exchangeRate,
-                            currencyMeta.code,
-                            currencyMeta.symbol
-                          )}
-                        </div>
-                        <div className="ml-2 text-sm font-medium text-green-600">
-                          Save 20%
-                        </div>
-                      </div>
-                      <div className="text-xs text-gray-500 mt-1">
-                        [Approximately US $
-                        {((product.price / 100) * 1.25).toFixed(2)}]
-                      </div>
+                      <p className="mt-1 text-red-700">
+                        This item is currently out of stock. Please check back
+                        later or browse similar products below.
+                      </p>
                     </div>
-
-                    {product.status === "available" ? (
-                      <div className="space-y-3">
-                        <div className="flex items-center">
-                          <label
-                            htmlFor="quantity"
-                            className="block text-sm text-gray-700 mr-4"
-                          >
-                            Quantity:
-                          </label>
-                          <div className="flex items-center border border-gray-300">
-                            <button
-                              type="button"
-                              className="p-1 text-gray-500 hover:text-gray-600"
-                              onClick={() =>
-                                setQuantity(Math.max(1, quantity - 1))
-                              }
-                            >
-                              <span className="sr-only">Decrease</span>
-                              <svg
-                                className="h-4 w-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M20 12H4"
-                                />
-                              </svg>
-                            </button>
-                            <input
-                              type="number"
-                              id="quantity"
-                              name="quantity"
-                              min="1"
-                              value={quantity}
-                              onChange={(e) =>
-                                setQuantity(
-                                  Math.max(1, parseInt(e.target.value) || 1)
-                                )
-                              }
-                              className="w-12 text-center border-0 focus:ring-0"
-                            />
-                            <button
-                              type="button"
-                              className="p-1 text-gray-500 hover:text-gray-600"
-                              onClick={() => setQuantity(quantity + 1)}
-                            >
-                              <span className="sr-only">Increase</span>
-                              <svg
-                                className="h-4 w-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M12 4v16m8-8H4"
-                                />
-                              </svg>
-                            </button>
-                          </div>
-                          <div className="ml-2 text-xs text-gray-500">
-                            More than 10 available
-                          </div>
-                        </div>
-
-                        <div className="space-y-2">
-                          <button
-                            onClick={handleCartAction}
-                            className={`w-full flex items-center justify-center px-6 py-2 text-base font-medium text-white ${
-                              isItemAdded
-                                ? "bg-[#e43147] hover:bg-[#c52b3d]"
-                                : "bg-[#0053A0] hover:bg-[#00438A]"
-                            }`}
-                          >
-                            <FiShoppingCart className="mr-2 h-5 w-5" />
-                            {isItemAdded
-                              ? "Remove from basket"
-                              : "Add to basket"}
-                          </button>
-
-                          <button
-                            onClick={toggleWishlist}
-                            className="w-full flex items-center justify-center px-6 py-2 border border-gray-300 text-base font-medium text-gray-700 bg-white hover:bg-gray-50"
-                          >
-                            <FiHeart
-                              className={`mr-2 h-5 w-5 ${
-                                isWishlist
-                                  ? "text-[#e43147] fill-[#e43147]"
-                                  : ""
-                              }`}
-                            />
-                            {isWishlist
-                              ? "Remove from watchlist"
-                              : "Add to watchlist"}
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="bg-red-50 border border-red-200 p-3 text-sm">
-                        <div className="font-medium text-red-800">
-                          Out of Stock
-                        </div>
-                        <p className="mt-1 text-red-700">
-                          This item is currently out of stock. Please check back
-                          later or browse similar products below.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
 
               {/* Shipping & Payment */}
