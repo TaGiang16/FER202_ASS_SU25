@@ -165,7 +165,7 @@ export default function AuthPage() {
         <div id="AuthPage" className="w-full min-h-screen bg-white">
             <div className="w-full flex items-center justify-center p-5 border-b-gray-300">
                 <a href="/" className="min-w-[170px]">
-                    <img width="170" src="/images/logo.svg" alt="Logo" />
+                    <img width="170" src="/images/logo5.png" alt="Logo" />
                 </a>
             </div>
 
@@ -294,33 +294,6 @@ export default function AuthPage() {
                         <a href="/forgot-password" className="text-center text-blue-600 hover:underline text-sm">
                             Quên mật khẩu?
                         </a>
-                    )}
-
-                    {/* Hai nút mới để điền thông tin tài khoản */}
-                    {isLogin && (
-                        <div className="flex gap-4 justify-center mt-4">
-                            <button
-                                type="button"
-                                onClick={fillSellerCredentials}
-                                className="p-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-                            >
-                                Tự Điền Seller
-                            </button>
-                            <button
-                                type="button"
-                                onClick={fillAdminCredentials}
-                                className="p-2 bg-purple-500 text-white rounded-md hover:bg-purple-600"
-                            >
-                                Tự Điền Admin
-                            </button>
-                            <button
-                                type="button"
-                                onClick={fillShipperCredentials}
-                                className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                            >
-                                Tự Điền Shipper
-                            </button>
-                        </div>
                     )}
 
                     <div className="relative my-4">
