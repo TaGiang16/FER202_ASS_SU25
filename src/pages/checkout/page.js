@@ -4,13 +4,15 @@ import Footer from "../../components/Footer";
 import SubMenu from "../../components/SubMenu";
 import MainHeader from "../../components/MainHeader";
 import TopMenu from "../../components/TopMenu";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import shippingRules from "../../data/shipping_rules.json";
 import { useRegion } from "../../context/RegionContext";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { sendOrderSuccessEmail } from "../../services/emailService";
+import CryptoJS from "crypto-js";
 
 import axios from "axios";
+import VNPay from "../../components/VNPay";
+import { Modal } from "react-bootstrap";
 
 // Calculate shipping fee from rules
 function calculateShippingFee(address) {
@@ -91,7 +93,6 @@ export default function Checkout() {
     return stored ? JSON.parse(stored) : null;
   }, []);
   const [selectedMethod, setSelectedMethod] = useState("cod"); // Default là COD
-  const [showPaypalPopup, setShowPaypalPopup] = useState(false);
 
   const [shippingFee, setShippingFee] = useState(0); // phí giao hàng
   const [shipmentCode, setShipmentCode] = useState(null); // mã vận đơn
@@ -104,6 +105,9 @@ export default function Checkout() {
     const converted = convertPrice(valueInMajorUnits);
     return formatCurrency(converted, currencyMeta.code, currencyMeta.symbol);
   };
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClose = () => setShowModal(false);
 
   // Hàm lấy dữ liệu từ API
   const fetchCartItems = async () => {
@@ -278,6 +282,57 @@ export default function Checkout() {
     }
   }, [effectiveAddress]);
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const vnpSecureHash = queryParams.get("vnp_SecureHash");
+    if (!vnpSecureHash) return;
+
+    const vnpAmount = queryParams.get("vnp_Amount");
+    const vnpBankCode = queryParams.get("vnp_BankCode");
+    const vnpBankTranNo = queryParams.get("vnp_BankTranNo");
+    const vnpCardType = queryParams.get("vnp_CardType");
+    const vnpOrderInfo = queryParams.get("vnp_OrderInfo");
+    const vnpPayDate = queryParams.get("vnp_PayDate");
+    const vnpResponseCode = queryParams.get("vnp_ResponseCode");
+    const vnpTmnCode = queryParams.get("vnp_TmnCode");
+    const vnpTransactionNo = queryParams.get("vnp_TransactionNo");
+    const vnpTransactionStatus = queryParams.get("vnp_TransactionStatus");
+    const vnpTxnRef = queryParams.get("vnp_TxnRef");
+
+    const vnp_Params = {
+      vnp_Amount: vnpAmount,
+      vnp_BankCode: vnpBankCode,
+      vnp_BankTranNo: vnpBankTranNo,
+      vnp_CardType: vnpCardType,
+      vnp_OrderInfo: vnpOrderInfo,
+      vnp_PayDate: vnpPayDate,
+      vnp_ResponseCode: vnpResponseCode,
+      vnp_TmnCode: vnpTmnCode,
+      vnp_TransactionNo: vnpTransactionNo,
+      vnp_TransactionStatus: vnpTransactionStatus,
+      vnp_TxnRef: vnpTxnRef,
+    };
+
+    const sortedKeys = Object.keys(vnp_Params).sort();
+    const checkData = sortedKeys
+      .map((key) => `${key}=${encodeURIComponent(vnp_Params[key])}`)
+      .join("&");
+
+    const checkedHash = CryptoJS.HmacSHA512(
+      checkData,
+      "RY6M089DOCMIKW5M2N6GB5H6GMTWSLYR"
+    ).toString(CryptoJS.enc.Hex);
+
+    console.log(checkedHash);
+    console.log("Co giong khong");
+    console.log(vnpSecureHash);
+
+    if (checkedHash === vnpSecureHash && !isLoading) {
+      setSelectedMethod("VNPay");
+      handlePayment();
+    }
+  }, [isLoading]);
+
   // Tính tổng tiền - accounting for discount if available
   const getCartTotal = () => {
     // If we have final total from a coupon discount, use that
@@ -299,7 +354,7 @@ export default function Checkout() {
     return getCartTotal();
   };
 
-  const handlePayment = async (isSimulated = false) => {
+  const handlePayment = async () => {
     if (!currentUser) {
       alert("Please login to checkout");
       navigate("/auth");
@@ -313,11 +368,6 @@ export default function Checkout() {
 
     if (!effectiveAddress) {
       alert("Please select a shipping address");
-      return;
-    }
-
-    if (selectedMethod === "paypal" && !isSimulated) {
-      setShowPaypalPopup(true); // chỉ mở popup nếu chưa xác nhận
       return;
     }
 
@@ -429,23 +479,23 @@ export default function Checkout() {
         createdAt: new Date().toISOString(),
       });
 
-      // Send order confirmation email
-      const orderDetailsForEmail = {
-        order_id: orderId,
-        total_amount: parseFloat((getCartTotal() / 100).toFixed(2)),
-        items: cartItems.map((item) => ({
-          product_name: item.title,
-          quantity: item.quantity,
-          price: parseFloat((item.price / 100).toFixed(2)),
-        })),
-        shipping_address: effectiveAddress,
-      };
+      // // Send order confirmation email
+      // const orderDetailsForEmail = {
+      //   order_id: orderId,
+      //   total_amount: parseFloat((getCartTotal() / 100).toFixed(2)),
+      //   items: cartItems.map((item) => ({
+      //     product_name: item.title,
+      //     quantity: item.quantity,
+      //     price: parseFloat((item.price / 100).toFixed(2)),
+      //   })),
+      //   shipping_address: effectiveAddress,
+      // };
 
-      await sendOrderSuccessEmail(
-        currentUser.email,
-        orderDetailsForEmail,
-        selectedMethod
-      );
+      // await sendOrderSuccessEmail(
+      //   currentUser.email,
+      //   orderDetailsForEmail,
+      //   selectedMethod
+      // );
 
       navigate("/success", {
         state: {
@@ -463,11 +513,6 @@ export default function Checkout() {
       console.error("Payment error:", error);
       alert("Đã xảy ra lỗi khi thanh toán.");
     }
-  };
-
-  // Update the PayPal button amount calculation to include discount
-  const getPayPalAmount = () => {
-    return (convertPrice(getCartTotal() + shippingFee) / 100).toFixed(2);
   };
 
   if (!currentUser) {
@@ -622,11 +667,11 @@ export default function Checkout() {
                         <input
                           type="radio"
                           name="payment"
-                          value="paypal"
-                          checked={selectedMethod === "paypal"}
-                          onChange={() => setSelectedMethod("paypal")}
+                          value="VNPay"
+                          checked={selectedMethod === "VNPay"}
+                          onChange={() => setSelectedMethod("VNPay")}
                         />
-                        <span>PayPal</span>
+                        <span>VNPay</span>
                       </label>
                     </div>
                   </div>
@@ -634,8 +679,8 @@ export default function Checkout() {
                   <button
                     className="mt-4 bg-blue-600 text-lg w-full text-white font-semibold p-3 rounded-full hover:bg-blue-700"
                     onClick={() => {
-                      if (selectedMethod === "paypal") {
-                        setShowPaypalPopup(true);
+                      if (selectedMethod === "VNPay") {
+                        setShowModal(true);
                       } else {
                         handlePayment();
                       }
@@ -654,54 +699,17 @@ export default function Checkout() {
               </div>
             </div>
           )}
-
-          {showPaypalPopup && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-[400px] w-full">
-                <div className="text-lg font-semibold mb-4">
-                  PayPal Checkout
-                </div>
-                <PayPalScriptProvider
-                  options={{
-                    "client-id": "test",
-                    currency: currencyMeta.code,
-                  }}
-                >
-                  <PayPalButtons
-                    style={{
-                      layout: "vertical",
-                      color: "blue",
-                      shape: "rect",
-                      label: "paypal",
-                    }}
-                    createOrder={(data, actions) => {
-                      return actions.order.create({
-                        purchase_units: [
-                          {
-                            amount: {
-                              value: getPayPalAmount(),
-                            },
-                          },
-                        ],
-                      });
-                    }}
-                    onApprove={(data, actions) => {
-                      return actions.order.capture().then((details) => {
-                        alert(
-                          `Transaction completed by ${details.payer.name.given_name}`
-                        );
-                        setShowPaypalPopup(false);
-                        handlePayment(true);
-                      });
-                    }}
-                    onCancel={() => {
-                      setShowPaypalPopup(false);
-                    }}
-                  />
-                </PayPalScriptProvider>
-              </div>
-            </div>
-          )}
+          <Modal show={showModal} onHide={handleClose} centered size="lg">
+            <Modal.Header closeButton>
+              <Modal.Title>VNPay Payment</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <VNPay
+                amount={getCartTotal() + shippingFee}
+                user={currentUser.id}
+              />
+            </Modal.Body>
+          </Modal>
         </div>
         <div>
           <Footer />

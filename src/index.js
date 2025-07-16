@@ -23,6 +23,8 @@ import UserProfile from "./pages/profile/page";
 import ProductDetail from "./pages/product/[id]/page";
 // ⬇️ Import RegionProvider
 import { RegionProvider } from "./context/RegionContext";
+import PaymentVerification from "./components/PaymentVerification";
+import Fail from "./pages/fail/page";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -35,6 +37,7 @@ root.render(
           <Route path="/cart/" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/success" element={<Success />} />
+          <Route path="/fail" element={<Fail />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/list-category/:categoryId" element={<ListCategory />} />
@@ -47,6 +50,10 @@ root.render(
           <Route path="/shipper" element={<ShipperDashboard />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route
+            path="/payment_verification"
+            element={<PaymentVerification />}
+          />
         </Routes>
       </BrowserRouter>
     </RegionProvider>

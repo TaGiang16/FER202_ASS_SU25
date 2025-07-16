@@ -30,7 +30,23 @@
         "ORD794",
         "ORD963",
         "ORD546",
-        "ORD424"
+        "ORD424",
+        "ORD843",
+        "ORD256",
+        "ORD951",
+        "ORD905",
+        "ORD495",
+        "ORD382",
+        "ORD680",
+        "ORD724",
+        "ORD698",
+        "ORD539",
+        "ORD489",
+        "ORD637",
+        "ORD748",
+        "ORD305",
+        "ORD190",
+        "ORD998"
       ],
       "address": {
         "street": "123 Main St",
@@ -1600,6 +1616,361 @@
           "price": 8.8
         }
       ]
+    },
+    {
+      "id": "0105",
+      "order_id": "ORD843",
+      "user_id": "1",
+      "order_date": "2025-07-13T05:10:29.345Z",
+      "total_amount": 24,
+      "original_amount": 24,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Slim Fit Denim Jacket",
+          "quantity": 2,
+          "price": 12
+        }
+      ]
+    },
+    {
+      "id": "c1dd",
+      "order_id": "ORD256",
+      "user_id": "1",
+      "order_date": "2025-07-16T00:20:29.755Z",
+      "total_amount": 48,
+      "original_amount": 48,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Slim Fit Denim Jacket",
+          "quantity": 4,
+          "price": 12
+        }
+      ]
+    },
+    {
+      "id": "2dd0",
+      "order_id": "ORD951",
+      "user_id": "1",
+      "order_date": "2025-07-16T00:22:35.614Z",
+      "total_amount": 36,
+      "original_amount": 36,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Slim Fit Denim Jacket",
+          "quantity": 3,
+          "price": 12
+        }
+      ]
+    },
+    {
+      "id": "3c39",
+      "order_id": "ORD905",
+      "user_id": "1",
+      "order_date": "2025-07-16T02:06:24.104Z",
+      "total_amount": 36,
+      "original_amount": 36,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Slim Fit Denim Jacket",
+          "quantity": 3,
+          "price": 12
+        }
+      ]
+    },
+    {
+      "id": "277c",
+      "order_id": "ORD495",
+      "user_id": "1",
+      "order_date": "2025-07-16T02:27:33.204Z",
+      "total_amount": 20,
+      "original_amount": 20,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Formal Leather Shoes",
+          "quantity": 1,
+          "price": 20
+        }
+      ]
+    },
+    {
+      "id": "1d88",
+      "order_id": "ORD382",
+      "user_id": "1",
+      "order_date": "2025-07-16T02:43:08.771Z",
+      "total_amount": 20,
+      "original_amount": 20,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Formal Leather Shoes",
+          "quantity": 1,
+          "price": 20
+        }
+      ]
+    },
+    {
+      "id": "7a39",
+      "order_id": "ORD680",
+      "user_id": "1",
+      "order_date": "2025-07-16T03:12:07.121Z",
+      "total_amount": 23,
+      "original_amount": 23,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Formal Leather Shoes",
+          "quantity": 1,
+          "price": 20
+        },
+        {
+          "product_name": "Wool Scarf",
+          "quantity": 1,
+          "price": 3
+        }
+      ]
+    },
+    {
+      "id": "4c97",
+      "order_id": "ORD724",
+      "user_id": "1",
+      "order_date": "2025-07-16T04:54:32.028Z",
+      "total_amount": 95,
+      "original_amount": 95,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Formal Leather Shoes",
+          "quantity": 4,
+          "price": 20
+        },
+        {
+          "product_name": "Wool Scarf",
+          "quantity": 1,
+          "price": 3
+        },
+        {
+          "product_name": "Slim Fit Denim Jacket",
+          "quantity": 1,
+          "price": 12
+        }
+      ]
+    },
+    {
+      "id": "b40c",
+      "order_id": "ORD698",
+      "user_id": "1",
+      "order_date": "2025-07-16T04:55:29.422Z",
+      "total_amount": 3,
+      "original_amount": 3,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Wool Scarf",
+          "quantity": 1,
+          "price": 3
+        }
+      ]
+    },
+    {
+      "id": "2b77",
+      "order_id": "ORD539",
+      "user_id": "1",
+      "order_date": "2025-07-16T04:56:42.440Z",
+      "total_amount": 3,
+      "original_amount": 3,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Wool Scarf",
+          "quantity": 1,
+          "price": 3
+        }
+      ]
+    },
+    {
+      "id": "be0b",
+      "order_id": "ORD489",
+      "user_id": "1",
+      "order_date": "2025-07-16T06:22:50.194Z",
+      "total_amount": 40,
+      "original_amount": 40,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "VNPay",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Formal Leather Shoes",
+          "quantity": 2,
+          "price": 20
+        }
+      ]
+    },
+    {
+      "id": "a50b",
+      "order_id": "ORD637",
+      "user_id": "1",
+      "order_date": "2025-07-16T06:23:35.452Z",
+      "total_amount": 12,
+      "original_amount": 12,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Slim Fit Denim Jacket",
+          "quantity": 1,
+          "price": 12
+        }
+      ]
+    },
+    {
+      "id": "0a89",
+      "order_id": "ORD748",
+      "user_id": "1",
+      "order_date": "2025-07-16T06:27:33.028Z",
+      "total_amount": 20,
+      "original_amount": 20,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Formal Leather Shoes",
+          "quantity": 1,
+          "price": 20
+        }
+      ]
+    },
+    {
+      "id": "34ad",
+      "order_id": "ORD855",
+      "user_id": "1",
+      "order_date": "2025-07-16T06:32:01.411Z",
+      "total_amount": 12,
+      "original_amount": 12,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Slim Fit Denim Jacket",
+          "quantity": 1,
+          "price": 12
+        }
+      ]
+    },
+    {
+      "id": "2f39",
+      "order_id": "ORD305",
+      "user_id": "1",
+      "order_date": "2025-07-16T06:32:42.947Z",
+      "total_amount": 12,
+      "original_amount": 12,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Slim Fit Denim Jacket",
+          "quantity": 1,
+          "price": 12
+        }
+      ]
+    },
+    {
+      "id": "fc57",
+      "order_id": "ORD190",
+      "user_id": "1",
+      "order_date": "2025-07-16T06:34:41.338Z",
+      "total_amount": 12,
+      "original_amount": 12,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Slim Fit Denim Jacket",
+          "quantity": 1,
+          "price": 12
+        }
+      ]
+    },
+    {
+      "id": "25b3",
+      "order_id": "ORD998",
+      "user_id": "1",
+      "order_date": "2025-07-16T06:35:25.484Z",
+      "total_amount": 40,
+      "original_amount": 40,
+      "discount_amount": 0,
+      "coupon_code": null,
+      "status": "pending",
+      "payment_method": "cod",
+      "shipping_fee": 550,
+      "items": [
+        {
+          "product_name": "Formal Leather Shoes",
+          "quantity": 2,
+          "price": 20
+        }
+      ]
     }
   ],
   "categories": [
@@ -1649,7 +2020,7 @@
       "categoryId": 1,
       "url": "/images/products/cate1/denim_jacket.jpg",
       "status": "available",
-      "quantity": 17,
+      "quantity": 113,
       "isAuction": false
     },
     {
@@ -1660,7 +2031,7 @@
       "categoryId": 1,
       "url": "/images/products/cate1/formal_leather_shoes.jpg",
       "status": "available",
-      "quantity": 15,
+      "quantity": 18,
       "isAuction": false
     },
     {
@@ -1704,7 +2075,7 @@
       "categoryId": 1,
       "url": "/images/products/cate1/wool_scarf.jpg",
       "status": "available",
-      "quantity": 40,
+      "quantity": 41,
       "isAuction": false
     },
     {
@@ -2040,17 +2411,7 @@
   ],
   "shoppingCart": [
     {
-      "userId": "4",
-      "productId": [
-        {
-          "idProduct": "1",
-          "quantity": "1"
-        }
-      ],
-      "dateAdded": "2025-07-11T13:49:55.435Z",
-      "id": 2
-    },
-    {
+      "id": "c77b",
       "userId": "1",
       "productId": [
         {
@@ -2058,8 +2419,7 @@
           "quantity": "4"
         }
       ],
-      "dateAdded": "2025-07-16T06:58:23.866Z",
-      "id": 3
+      "dateAdded": "2025-07-16T06:37:27.858Z"
     }
   ],
   "paymentMethods": [
@@ -2748,6 +3108,278 @@
       "shippingFee": 550,
       "status": "processing",
       "createdAt": "2025-04-26T23:54:25.792Z"
+    },
+    {
+      "id": "a8a2",
+      "shipmentCode": "SHIP276081",
+      "userId": "1",
+      "orderId": "ORD843",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-13T05:10:29.440Z"
+    },
+    {
+      "id": "c43d",
+      "shipmentCode": "SHIP919250",
+      "userId": "1",
+      "orderId": "ORD256",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T00:20:29.873Z"
+    },
+    {
+      "id": "7f44",
+      "shipmentCode": "SHIP484992",
+      "userId": "1",
+      "orderId": "ORD951",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T00:22:35.717Z"
+    },
+    {
+      "id": "482e",
+      "shipmentCode": "SHIP396600",
+      "userId": "1",
+      "orderId": "ORD905",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T02:06:24.237Z"
+    },
+    {
+      "id": "c3d6",
+      "shipmentCode": "SHIP142100",
+      "userId": "1",
+      "orderId": "ORD495",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T02:27:33.407Z"
+    },
+    {
+      "id": "47d1",
+      "shipmentCode": "SHIP465939",
+      "userId": "1",
+      "orderId": "ORD382",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T02:43:08.933Z"
+    },
+    {
+      "id": "8439",
+      "shipmentCode": "SHIP310065",
+      "userId": "1",
+      "orderId": "ORD680",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T03:12:07.239Z"
+    },
+    {
+      "id": "9eb2",
+      "shipmentCode": "SHIP746071",
+      "userId": "1",
+      "orderId": "ORD724",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T04:54:32.173Z"
+    },
+    {
+      "id": "8841",
+      "shipmentCode": "SHIP867701",
+      "userId": "1",
+      "orderId": "ORD698",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T04:55:29.546Z"
+    },
+    {
+      "id": "6be2",
+      "shipmentCode": "SHIP107817",
+      "userId": "1",
+      "orderId": "ORD539",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T04:56:42.554Z"
+    },
+    {
+      "id": "be68",
+      "shipmentCode": "SHIP979655",
+      "userId": "1",
+      "orderId": "ORD489",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T06:22:50.335Z"
+    },
+    {
+      "id": "9752",
+      "shipmentCode": "SHIP504670",
+      "userId": "1",
+      "orderId": "ORD637",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T06:23:35.570Z"
+    },
+    {
+      "id": "a354",
+      "shipmentCode": "SHIP525117",
+      "userId": "1",
+      "orderId": "ORD748",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T06:27:33.143Z"
+    },
+    {
+      "id": "fe48",
+      "shipmentCode": "SHIP621443",
+      "userId": "1",
+      "orderId": "ORD855",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T06:32:01.527Z"
+    },
+    {
+      "id": "40e7",
+      "shipmentCode": "SHIP182905",
+      "userId": "1",
+      "orderId": "ORD305",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T06:32:43.027Z"
+    },
+    {
+      "id": "1980",
+      "shipmentCode": "SHIP705852",
+      "userId": "1",
+      "orderId": "ORD190",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T06:34:41.435Z"
+    },
+    {
+      "id": "b43d",
+      "shipmentCode": "SHIP835543",
+      "userId": "1",
+      "orderId": "ORD998",
+      "address": {
+        "fullName": "John Smiths",
+        "street": "123 Main St",
+        "city": "New York",
+        "country": "United States",
+        "zipcode": "12345"
+      },
+      "shippingFee": 550,
+      "status": "pending",
+      "createdAt": "2025-07-16T06:35:25.588Z"
     }
   ],
   "similarItems": [
@@ -3655,49 +4287,179 @@
       "confirmed": false
     },
     {
+      "id": "5cb4",
+      "order_id": "ORD905",
+      "confirmed": false
+    },
+    {
+      "id": "5ab4",
+      "order_id": "ORD905",
+      "confirmed": false
+    },
+    {
+      "id": "7167",
+      "order_id": "ORD951",
+      "confirmed": false
+    },
+    {
+      "id": "c3b7",
+      "order_id": "ORD951",
+      "confirmed": false
+    },
+    {
+      "id": "2e3b",
+      "order_id": "ORD256",
+      "confirmed": false
+    },
+    {
+      "id": "8de7",
+      "order_id": "ORD843",
+      "confirmed": false
+    },
+    {
+      "id": "b784",
+      "order_id": "ORD843",
+      "confirmed": false
+    },
+    {
+      "id": "1b59",
       "order_id": "ORD545",
-      "confirmed": false,
-      "id": "q9YuMdG"
+      "confirmed": false
     },
     {
+      "id": "2703",
       "order_id": "ORD545",
-      "confirmed": false,
-      "id": "Jv1kniv"
+      "confirmed": false
     },
     {
+      "id": "7446",
       "order_id": "ORD965",
-      "confirmed": false,
-      "id": "uMmjlhe"
+      "confirmed": false
     },
     {
+      "id": "581b",
       "order_id": "ORD965",
-      "confirmed": false,
-      "id": "n2ubGP6"
+      "confirmed": false
     },
     {
-      "order_id": "ORD965",
-      "confirmed": false,
-      "id": "YtND_9H"
+      "id": "d5de",
+      "order_id": "ORD495",
+      "confirmed": false
     },
     {
-      "order_id": "ORD990",
-      "confirmed": false,
-      "id": "OxLuUys"
+      "id": "2ae8",
+      "order_id": "ORD495",
+      "confirmed": false
     },
     {
-      "order_id": "ORD990",
-      "confirmed": false,
-      "id": "4H17HUb"
+      "id": "1d65",
+      "order_id": "ORD382",
+      "confirmed": false
     },
     {
-      "order_id": "ORD681",
-      "confirmed": false,
-      "id": "NJXXkAP"
+      "id": "e512",
+      "order_id": "ORD382",
+      "confirmed": false
     },
     {
-      "order_id": "ORD607",
-      "confirmed": false,
-      "id": "S8TSjzI"
+      "id": "76fd",
+      "order_id": "ORD680",
+      "confirmed": false
+    },
+    {
+      "id": "b61f",
+      "order_id": "ORD680",
+      "confirmed": false
+    },
+    {
+      "id": "c54c",
+      "order_id": "ORD998",
+      "confirmed": false
+    },
+    {
+      "id": "2643",
+      "order_id": "ORD998",
+      "confirmed": false
+    },
+    {
+      "id": "98ae",
+      "order_id": "ORD190",
+      "confirmed": false
+    },
+    {
+      "id": "60fc",
+      "order_id": "ORD190",
+      "confirmed": false
+    },
+    {
+      "id": "268d",
+      "order_id": "ORD305",
+      "confirmed": false
+    },
+    {
+      "id": "aae3",
+      "order_id": "ORD305",
+      "confirmed": false
+    },
+    {
+      "id": "91e2",
+      "order_id": "ORD748",
+      "confirmed": false
+    },
+    {
+      "id": "9d00",
+      "order_id": "ORD748",
+      "confirmed": false
+    },
+    {
+      "id": "88ed",
+      "order_id": "ORD637",
+      "confirmed": false
+    },
+    {
+      "id": "9f86",
+      "order_id": "ORD637",
+      "confirmed": false
+    },
+    {
+      "id": "a449",
+      "order_id": "ORD489",
+      "confirmed": false
+    },
+    {
+      "id": "3799",
+      "order_id": "ORD489",
+      "confirmed": false
+    },
+    {
+      "id": "c1a4",
+      "order_id": "ORD539",
+      "confirmed": false
+    },
+    {
+      "id": "325c",
+      "order_id": "ORD539",
+      "confirmed": false
+    },
+    {
+      "id": "b9a3",
+      "order_id": "ORD698",
+      "confirmed": false
+    },
+    {
+      "id": "b23a",
+      "order_id": "ORD698",
+      "confirmed": false
+    },
+    {
+      "id": "dd27",
+      "order_id": "ORD724",
+      "confirmed": false
+    },
+    {
+      "id": "a51f",
+      "order_id": "ORD724",
+      "confirmed": false
     }
   ],
   "coupons": [

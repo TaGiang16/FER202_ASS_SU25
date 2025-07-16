@@ -47,7 +47,6 @@ export function useExchangeRates(baseCurrency = "USD") {
       });
   }, [baseCurrency]);
 
-  // ✅ Bổ sung hàm helper
   const getExchangeRate = (currencyCode) => {
     return rates[currencyCode] || 1;
   };
