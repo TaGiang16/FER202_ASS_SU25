@@ -10,7 +10,7 @@ export default function SubMenu() {
     const staticMenuItems = [
         { id: "home", name: "Home", isStatic: true },
         { id: "saved", name: "Saved", isStatic: true },
-        { id: "sell", name: "Sell", isStatic: true }
+        { id: "sell", name: "Sell", isStatic: false }
     ];
 
     // Fetch categories from API
@@ -23,9 +23,7 @@ export default function SubMenu() {
                 // Combine static items with categories from API
                 const allItems = [
                     staticMenuItems[0],
-                    staticMenuItems[1],
                     ...data,
-                    staticMenuItems[2]
                 ];
                 
                 setCategories(allItems);

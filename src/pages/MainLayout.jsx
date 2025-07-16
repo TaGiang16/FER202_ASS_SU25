@@ -33,92 +33,27 @@ import { useRegion } from "../context/RegionContext";
 const BANNER_SLIDES = [
   {
     id: 1,
-    title: "Summer Sale Up to 70% Off",
-    subtitle: "Discover amazing deals on thousands of items",
-    cta: "Shop Now",
-    image: "https://picsum.photos/id/26/1200/400",
-    color: "from-blue-600 to-purple-600",
-  },
-  {
-    id: 2,
-    title: "New Tech Arrivals",
-    subtitle: "The latest gadgets at unbeatable prices",
-    cta: "Explore Tech",
-    image: "https://picsum.photos/id/96/1200/400",
-    color: "from-green-600 to-teal-600",
-  },
-  {
-    id: 3,
-    title: "Fashion Forward",
-    subtitle: "Trending styles for every occasion",
+    title: "New Season Fashion",
+    subtitle: "Update your wardrobe with the latest trends",
     cta: "Shop Fashion",
-    image: "https://picsum.photos/id/64/1200/400",
-    color: "from-red-600 to-orange-600",
-  },
-];
-
-// Dữ liệu mẫu cho các thương hiệu nổi bật
-const FEATURED_BRANDS = [
-  {
-    id: 1,
-    name: "Apple",
-    logo: "https://picsum.photos/id/180/100/100",
-    discount: "Up to 30% off",
+    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1200&q=80",
+    color: "from-pink-600 to-purple-600",
   },
   {
     id: 2,
-    name: "Samsung",
-    logo: "https://picsum.photos/id/181/100/100",
-    discount: "Up to 40% off",
+    title: "Street Style Essentials",
+    subtitle: "Discover must-have streetwear for every day",
+    cta: "Explore Streetwear",
+    image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1200&q=80",
+    color: "from-yellow-600 to-orange-600",
   },
   {
     id: 3,
-    name: "Sony",
-    logo: "https://picsum.photos/id/182/100/100",
-    discount: "Up to 25% off",
-  },
-  {
-    id: 4,
-    name: "Nike",
-    logo: "https://picsum.photos/id/183/100/100",
-    discount: "Up to 35% off",
-  },
-  {
-    id: 5,
-    name: "Adidas",
-    logo: "https://picsum.photos/id/184/100/100",
-    discount: "Up to 30% off",
-  },
-  {
-    id: 6,
-    name: "Dyson",
-    logo: "https://picsum.photos/id/185/100/100",
-    discount: "Up to 20% off",
-  },
-];
-
-// Dữ liệu mẫu cho các bộ sưu tập
-const COLLECTIONS = [
-  {
-    id: 1,
-    title: "Summer Essentials",
-    image: "https://picsum.photos/id/28/600/300",
-    itemCount: 156,
-    color: "from-yellow-400 to-orange-500",
-  },
-  {
-    id: 2,
-    title: "Tech Gadgets Under $100",
-    image: "https://picsum.photos/id/48/600/300",
-    itemCount: 89,
-    color: "from-blue-400 to-indigo-500",
-  },
-  {
-    id: 3,
-    title: "Home Office Setup",
-    image: "https://picsum.photos/id/36/600/300",
-    itemCount: 124,
-    color: "from-green-400 to-teal-500",
+    title: "Elegant Dresses & Suits",
+    subtitle: "Perfect outfits for every special occasion",
+    cta: "Shop Now",
+    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80", // Ảnh thời trang hợp lệ
+    color: "from-blue-600 to-indigo-600",
   },
 ];
 // Component chính
@@ -406,41 +341,21 @@ const MainPage = () => {
           >
 
             <div className="relative h-[300px] md:h-[400px] overflow-hidden">
-              {BANNER_SLIDES.map((slide, index) => (
-                <div
-                  key={slide.id}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${index === currentBannerSlide
-                      ? "opacity-100"
-                      : "opacity-0 pointer-events-none"
-                    }`}
-                >
-                  <div
-                    className="absolute inset-0 bg-gradient-to-r opacity-80 z-10"
-                    style={{
-                      backgroundImage: `linear-gradient(to right, ${slide.color.split(" ")[1]
-                        }, transparent)`,
-                    }}
-                  ></div>
-                  <img
-                    src={slide.image || "/placeholder.svg"}
-                    alt={slide.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 flex items-center z-20">
-                    <div className="ml-8 md:ml-16 max-w-lg">
-                      <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                        {slide.title}
-                      </h2>
-                      <p className="text-white/90 text-lg mb-6">
-                        {slide.subtitle}
-                      </p>
-                      <button className="bg-white text-gray-900 hover:bg-gray-50 px-6 py-3 rounded-full font-medium shadow-md transition-transform hover:scale-105">
-                        {slide.cta}
-                      </button>
-                    </div>
-                  </div>
+              <img
+                src={BANNER_SLIDES[currentBannerSlide].image}
+                alt={BANNER_SLIDES[currentBannerSlide].title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 flex items-center z-20 bg-black/40">
+                <div className="ml-8 md:ml-16 max-w-lg">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                    {BANNER_SLIDES[currentBannerSlide].title}
+                  </h2>
+                  <p className="text-white/90 text-lg mb-6">
+                    {BANNER_SLIDES[currentBannerSlide].subtitle}
+                  </p>
                 </div>
-              ))}
+              </div>
             </div>
 
             <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
@@ -479,8 +394,8 @@ const MainPage = () => {
                 </div>
                 <span
                   className={`text-base font-semibold ${!selectedCategory
-                      ? "text-blue-600"
-                      : "text-gray-700 group-hover:text-blue-500"
+                    ? "text-blue-600"
+                    : "text-gray-700 group-hover:text-blue-500"
                     }`}
                 >
                   All Categories
@@ -494,8 +409,8 @@ const MainPage = () => {
                 >
                   <div
                     className={`w-40 h-40 rounded-full flex items-center justify-center bg-white mb-4 shadow-lg transition-all duration-300 overflow-hidden group-hover:shadow-xl ${selectedCategory === category.id
-                        ? "ring-3 ring-blue-500"
-                        : ""
+                      ? "ring-3 ring-blue-500"
+                      : ""
                       }`}
                   >
                     <img
@@ -506,8 +421,8 @@ const MainPage = () => {
                   </div>
                   <span
                     className={`text-base font-semibold ${selectedCategory === category.id
-                        ? "text-blue-600"
-                        : "text-gray-700 group-hover:text-blue-500"
+                      ? "text-blue-600"
+                      : "text-gray-700 group-hover:text-blue-500"
                       }`}
                   >
                     {category.name}
@@ -612,8 +527,8 @@ const MainPage = () => {
                           >
                             <FiHeart
                               className={`${wishlist.includes(product.id)
-                                  ? "text-[#e43147] fill-[#e43147]"
-                                  : "text-gray-400"
+                                ? "text-[#e43147] fill-[#e43147]"
+                                : "text-gray-400"
                                 }`}
                             />
                           </button>
@@ -655,8 +570,8 @@ const MainPage = () => {
                   onClick={goToPreviousPage}
                   disabled={currentPage === 1}
                   className={`flex items-center px-4 py-2 rounded-full ${currentPage === 1
-                      ? "bg-gray-50 text-gray-400 cursor-not-allowed"
-                      : "bg-white hover:bg-gray-50 text-gray-700 border shadow-sm"
+                    ? "bg-gray-50 text-gray-400 cursor-not-allowed"
+                    : "bg-white hover:bg-gray-50 text-gray-700 border shadow-sm"
                     }`}
                 >
                   <FiChevronLeft className="mr-1" size={12} /> Previous
@@ -675,8 +590,8 @@ const MainPage = () => {
                           key={index + 1}
                           onClick={() => paginate(index + 1)}
                           className={`w-10 h-10 mx-1 rounded-full ${currentPage === index + 1
-                              ? "bg-blue-600 text-white"
-                              : "bg-white hover:bg-gray-50 text-gray-700 border shadow-sm"
+                            ? "bg-blue-600 text-white"
+                            : "bg-white hover:bg-gray-50 text-gray-700 border shadow-sm"
                             }`}
                         >
                           {index + 1}
@@ -706,8 +621,8 @@ const MainPage = () => {
                   onClick={goToNextPage}
                   disabled={currentPage === totalPages}
                   className={`flex items-center px-4 py-2 rounded-full ${currentPage === totalPages
-                      ? "bg-gray-50 text-gray-400 cursor-not-allowed"
-                      : "bg-white hover:bg-gray-50 text-gray-700 border shadow-sm"
+                    ? "bg-gray-50 text-gray-400 cursor-not-allowed"
+                    : "bg-white hover:bg-gray-50 text-gray-700 border shadow-sm"
                     }`}
                 >
                   Next <FiChevronRight className="ml-1" size={12} />
@@ -887,68 +802,6 @@ const MainPage = () => {
               </motion.div>
             )}
           </div>
-
-          {/* Bộ sưu tập */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">Featured Collections</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {COLLECTIONS.map((collection) => (
-                <motion.div
-                  key={collection.id}
-                  whileHover={{ scale: 1.03 }}
-                  className="relative rounded-lg overflow-hidden shadow-lg h-48"
-                >
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-r ${collection.color} opacity-80`}
-                  ></div>
-                  <img
-                    src={collection.image || "/placeholder.svg"}
-                    alt={collection.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 flex flex-col justify-end p-6">
-                    <h3 className="text-white text-xl font-bold mb-1">
-                      {collection.title}
-                    </h3>
-                    <p className="text-white/90 text-sm mb-3">
-                      {collection.itemCount} items
-                    </p>
-                    <button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white py-2 px-4 rounded-full text-sm font-medium self-start">
-                      Explore Collection
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Thương hiệu nổi bật */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">Featured Brands</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-              {FEATURED_BRANDS.map((brand) => (
-                <motion.div
-                  key={brand.id}
-                  whileHover={{ scale: 1.05 }}
-                  className="bg-white rounded-lg shadow-sm p-4 text-center cursor-pointer"
-                >
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gray-50 rounded-full p-2 flex items-center justify-center">
-                    <img
-                      src={brand.logo || "/placeholder.svg"}
-                      alt={brand.name}
-                      className="max-h-full max-w-full object-contain"
-                    />
-                  </div>
-                  <h3 className="font-medium text-gray-900">{brand.name}</h3>
-                  <p className="text-xs text-[#e43147] font-medium mt-1">
-                    {brand.discount}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
           {/* Đăng ký nhận thông báo */}
           <div className="mb-12">
             <div className="bg-gradient-to-r from-[#0053A0] to-[#00438A] rounded-lg p-6 text-white">

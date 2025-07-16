@@ -137,6 +137,9 @@ export default function TopMenu() {
 
                 <ul className="bg-white">
                   <li className="text-[11px] py-2 px-4 w-full hover:underline text-blue-500 hover:text-blue-600 cursor-pointer">
+                    <Link to="/profile">Profile</Link>
+                  </li>
+                  <li className="text-[11px] py-2 px-4 w-full hover:underline text-blue-500 hover:text-blue-600 cursor-pointer">
                     <Link to="/order-history">My orders</Link>
                   </li>
                   <li
@@ -148,9 +151,6 @@ export default function TopMenu() {
                 </ul>
               </div>
             )}
-          </li>
-          <li className="px-3 hover:underline cursor-pointer">
-            <Link to="/daily-deals">Daily Deals</Link>
           </li>
           <li className="px-3 hover:underline cursor-pointer">
             <Link to="/help">Help & Contact</Link>
@@ -172,23 +172,14 @@ export default function TopMenu() {
             </li>
           )}
           {currentUser?.role === "shipper" && (
-                        <li className="flex items-center gap-2 px-3 hover:underline cursor-pointer">
-                            <Link to="/shipper" className="flex items-center gap-2 text-green-500 font-bold">
-                                Shipper
-                            </Link>
-                        </li>
-                    )}
-          <li className="flex items-center gap-2 px-3 hover:underline cursor-pointer">
-            <Link to="/sell" className="flex items-center gap-2">
-              Sell
-            </Link>
-          </li>
+            <li className="flex items-center gap-2 px-3 hover:underline cursor-pointer">
+              <Link to="/shipper" className="flex items-center gap-2 text-green-500 font-bold">
+                Shipper
+              </Link>
+            </li>
+          )}
           <li className="flex items-center gap-2 px-3">
             <RegionSelector />
-          </li>
-
-          <li className="flex items-center gap-2 px-3 hover:underline cursor-pointer">
-            <Link to="/wishlist">Wishlist</Link>
           </li>
           <li className="px-3 hover:underline cursor-pointer">
             <Link to="/cart" className="relative">

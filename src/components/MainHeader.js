@@ -98,12 +98,6 @@ export default function MainHeader() {
                       Search
                     </button>
                   </div>
-                  <a
-                    href="#"
-                    className="text-xs px-2 hover:text-blue-500 cursor-pointer"
-                  >
-                    Advanced
-                  </a>
                 </form>
 
                 {/* Dropdown with search results */}
