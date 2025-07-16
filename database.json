@@ -1649,7 +1649,7 @@
       "categoryId": 1,
       "url": "/images/products/cate1/denim_jacket.jpg",
       "status": "available",
-      "quantity": 20,
+      "quantity": 17,
       "isAuction": false
     },
     {
@@ -2049,6 +2049,17 @@
       ],
       "dateAdded": "2025-07-11T13:49:55.435Z",
       "id": 2
+    },
+    {
+      "userId": "1",
+      "productId": [
+        {
+          "idProduct": "1",
+          "quantity": "4"
+        }
+      ],
+      "dateAdded": "2025-07-16T06:58:23.866Z",
+      "id": 3
     }
   ],
   "paymentMethods": [
