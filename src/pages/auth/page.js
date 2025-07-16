@@ -79,7 +79,7 @@ export default function AuthPage() {
                         city: formData.city,
                         country: formData.country
                     },
-                    role: 'seller', // Role mặc định là 'seller'
+                    role: 'customer', // Role mặc định là 'customer'
                     action: 'unlock' // Thêm thuộc tính action với giá trị 'unlock'
                 }
 
