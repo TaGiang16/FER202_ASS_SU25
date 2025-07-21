@@ -214,6 +214,21 @@
       },
       "role": "customer",
       "action": "unlock"
+    },
+    {
+      "id": "user1753087488001",
+      "email": "phamhoang20112003@gmail.com",
+      "password": "123",
+      "fullname": "Phạm Đức Hoàng",
+      "order_id": [],
+      "address": {
+        "street": "1",
+        "zipcode": "1",
+        "city": "1",
+        "country": "1"
+      },
+      "role": "customer",
+      "action": "unlock"
     }
   ],
   "orders": [
@@ -2048,7 +2063,7 @@
         }
       ],
       "dateAdded": "2025-07-11T13:49:55.435Z",
-      "id": 2
+      "id": "2"
     }
   ],
   "paymentMethods": [
@@ -2339,6 +2354,11 @@
     {
       "id": "sp1745687421423",
       "userId": "user1745687421412",
+      "products": []
+    },
+    {
+      "id": "sp1753087488013",
+      "userId": "user1753087488001",
       "products": []
     }
   ],
